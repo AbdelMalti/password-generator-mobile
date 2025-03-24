@@ -52,11 +52,11 @@ const Slider = ({ styleSlider }: { styleSlider?: any }) => {
     });
 
     // To make sure the position.x doesn't go out of bounds (clamping to min and max)
-  const position_x = position.x.interpolate({
-    inputRange: [minLimit, maxLimit], // The limits range
-    outputRange: [minLimit, maxLimit], // Output to clamp values
-    extrapolate: 'clamp', // Automatically clamp values to min/max
-  });
+    const position_x = position.x.interpolate({
+        inputRange: [minLimit, maxLimit], // The limits range
+        outputRange: [minLimit, maxLimit], // Output to clamp values
+        extrapolate: 'clamp', // Automatically clamp values to min/max
+    });
 
     const panRef = useRef(panResponder).current;
 
