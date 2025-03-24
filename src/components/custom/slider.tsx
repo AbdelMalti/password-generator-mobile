@@ -27,8 +27,11 @@ const styles = StyleSheet.create({
 });
 
 const Slider = ({ styleSlider }: { styleSlider?: any }) => {
+    // Merging the styles with Object.assign
     const combinedStyle = StyleSheet.create({
-        ...styles, ...styleSlider,
+        container: { ...styles.container, ...(styleSlider?.container ? styleSlider.container : {}) }, // Merges both containers
+        track: { ...styles.track, ...(styleSlider?.track ? styleSlider.track : {})}, // Merges both track styles
+        thumb: { ...styles.thumb, ...(styleSlider?.thumb ? styleSlider?.thumb : {})}, // Merges both thumb styles
     });
 
     const maxLimit = (combinedStyle.track.width - combinedStyle.thumb.borderRadius );
