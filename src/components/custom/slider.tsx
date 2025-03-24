@@ -3,20 +3,10 @@ import {View, StyleSheet, Animated, PanResponder} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
+        margin: 20,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    titleText: {
-        fontSize: 14,
-        lineHeight: 24,
-        fontWeight: 'bold',
-    },
-    box: {
-        height: 150,
-        width: 150,
-        backgroundColor: 'blue',
-        borderRadius: 5,
     },
     track: {
         width: 250,
@@ -26,14 +16,14 @@ const styles = StyleSheet.create({
         position: 'relative',
         marginTop: 10,
         },
-        thumb: {
-            width: 20,
-            height: 20,
-            backgroundColor: 'blue',
-            borderRadius: 10,
-            position: 'absolute',
-            top: -5,
-        },
+    thumb: {
+        width: 20,
+        height: 20,
+        backgroundColor: 'blue',
+        borderRadius: 10,
+        position: 'absolute',
+        top: -5,
+    },
 });
 
 const Slider = ({ styleSlider }: { styleSlider?: any }) => {
