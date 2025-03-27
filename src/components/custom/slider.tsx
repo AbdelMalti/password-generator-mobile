@@ -1,13 +1,17 @@
 import React, { useRef } from 'react';
 import {View, StyleSheet, Animated, PanResponder} from 'react-native';
 
+type SliderProps = {
+    styleSlider: {
+        track: {},
+        thumb: {}
+    };
+    onDataReceived: (newPassLength: string, maxLimit: number) => void;
+    maxCharacters?: number;
+    minCharacters?: number;
+}
+
 const styles = StyleSheet.create({
-    container: {
-        margin: 20,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     track: {
         width: 250,
         height: 10,
@@ -26,12 +30,11 @@ const styles = StyleSheet.create({
     },
 });
 
-const Slider = ({ styleSlider }: { styleSlider?: any }) => {
+const Slider = (props: SliderProps) => {
     // Merging the styles with Object.assign
     const combinedStyle = StyleSheet.create({
-        container: { ...styles.container, ...(styleSlider?.container ? styleSlider.container : {}) }, // Merges both containers
-        track: { ...styles.track, ...(styleSlider?.track ? styleSlider.track : {})}, // Merges both track styles
-        thumb: { ...styles.thumb, ...(styleSlider?.thumb ? styleSlider?.thumb : {})}, // Merges both thumb styles
+        track: { ...styles.track, ...(props.styleSlider?.track ? props.styleSlider.track : {})}, // Merges both track styles
+        thumb: { ...styles.thumb, ...(props.styleSlider?.thumb ? props.styleSlider?.thumb : {})}, // Merges both thumb styles
     });
 
     const maxLimit = (combinedStyle.track.width - combinedStyle.thumb.borderRadius );
@@ -48,35 +51,34 @@ const Slider = ({ styleSlider }: { styleSlider?: any }) => {
         ),
         onPanResponderRelease: () => {
             position.extractOffset();
+            props.onDataReceived(JSON.stringify(position_x), maxLimit);
         },
     });
 
     // To make sure the position.x doesn't go out of bounds (clamping to min and max)
-    const position_x = position.x.interpolate({
+    let position_x = position.x.interpolate({
         inputRange: [minLimit, maxLimit], // The limits range
         outputRange: [minLimit, maxLimit], // Output to clamp values
         extrapolate: 'clamp', // Automatically clamp values to min/max
     });
 
+    console.log(`position_x : ${JSON.stringify(position_x)}`);
+
     const panRef = useRef(panResponder).current;
 
     return (
-        <>
-            <View style={combinedStyle.container}>
-                <View style={combinedStyle.track}>
-                    <Animated.View
-                        style={[
-                            combinedStyle.thumb,
-                            {
-                                left: position,
-                                transform: [{translateX: position_x}],
-                            },
-                        ]}
-                        {...panRef.panHandlers}
-                    />
-                </View>
-            </View>
-        </>
+        <View style={combinedStyle.track}>
+            <Animated.View
+                style={[
+                    combinedStyle.thumb,
+                    {
+                        left: position,
+                        transform: [{translateX: position_x}],
+                    },
+                ]}
+                {...panRef.panHandlers}
+            />
+        </View>
     );
 };
 

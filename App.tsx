@@ -12,7 +12,7 @@ function App(): React.JSX.Element {
           <View>
             <Text>This is the password app generator</Text>
           </View>
-          <PasswordLength/>
+          <PasswordLength maxCharacters={55} minCharacters={5} />
         </SafeAreaView>
     </StrictMode>
   );
