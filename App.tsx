@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import PasswordLength from './src/components/parameters/length';
 import Checkbox from './src/components/custom/checkbox';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import React, { StrictMode, useState } from 'react';
+import generatePassword from './src/service/randomPassword';
 
 
 function App(): React.JSX.Element {
@@ -44,6 +45,14 @@ function App(): React.JSX.Element {
               onPress={() => setIsLowerCharacter(!isLowerCharacter)}
               label="a-z"
           />
+          <View>
+            <Pressable
+              onPress={ () => generatePassword(passLength, isUpperCharacter, isLowerCharacter, isSpecialCharacter) }
+              style={ styles.button }
+            >
+              <Text style={ styles.buttonText }>Click Me</Text>
+            </Pressable>
+          </View>
         </SafeAreaView>
     </StrictMode>
   );
@@ -62,6 +71,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#2596be', // Light gray background
       justifyContent: 'center', // Center content
       alignItems: 'center',     // Align items in center
+  },
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
