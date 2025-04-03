@@ -1,17 +1,13 @@
+import SliderProps from '../../utils/sliderProps';
 import Slider from '../custom/slider';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-type PasswordLengthProps = {
-    maxCharacters: number;
-    minCharacters: number;
-    onRelease: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const PasswordLength = ( props: PasswordLengthProps ) => {
+const PasswordLength = ( props: SliderProps ) => {
+    // Merging the styles with Object.assign
     return(
-        <View style={styles1.container}>
+        <View style={props.style?.sliderContainer}>
             <Slider
-                styleSlider={styles1}
+                style={props.style}
                 minCharacters={props.minCharacters}
                 maxCharacters={props.maxCharacters}
                 onRelease={props.onRelease}
@@ -19,21 +15,5 @@ const PasswordLength = ( props: PasswordLengthProps ) => {
         </View>
     );
 };
-
-const styles1 = StyleSheet.create({
-    container: {
-        margin: 20,
-        flex: 1,
-        flexDirection: 'row', // Aligns children in a row (horizontally)
-        alignItems: 'center', // Align items vertically in the center
-        gap: 20,
-    },
-    track: {
-        backgroundColor: '#33334d',
-        },
-    thumb: {
-        backgroundColor: '#e28743',
-    },
-});
 
 export default PasswordLength;

@@ -1,53 +1,12 @@
 import React, { useRef, useState } from 'react';
-import {View, StyleSheet, Animated, PanResponder, Text} from 'react-native';
-
-type SliderProps = {
-    styleSlider: {
-        track: {},
-        thumb: {}
-    };
-    maxCharacters: number;
-    minCharacters: number;
-    onRelease: (val: number) => void;
-}
-
-const styles = StyleSheet.create({
-    track: {
-        width: 250,
-        height: 10,
-        backgroundColor: 'gray',
-        borderRadius: 15,
-        position: 'relative',
-    },
-    thumb: {
-        width: 20,
-        height: 20,
-        backgroundColor: 'blue',
-        borderRadius: 10,
-        position: 'relative',
-        top: -5,
-    },
-    input: {
-        height: 20,
-        borderColor: '#333',
-        borderWidth: 0,
-        position: 'relative',
-        fontSize: 18,
-        top: -2,
-    },
-});
+import {View, Animated, PanResponder, Text} from 'react-native';
+import SliderProps from '../../utils/sliderProps';
 
 const Slider = (props: SliderProps) => {
 
     const [ passLengthInput, setPassLengthInput ] = useState(props.minCharacters.toString());
 
-    // Merging the styles with Object.assign
-    const combinedStyle = StyleSheet.create({
-        track: { ...styles.track, ...(props.styleSlider?.track ? props.styleSlider.track : {})}, // Merges both track styles
-        thumb: { ...styles.thumb, ...(props.styleSlider?.thumb ? props.styleSlider?.thumb : {})}, // Merges both thumb styles
-    });
-
-    const maxLimit = (combinedStyle.track.width - combinedStyle.thumb.borderRadius );
+    const maxLimit = (props.style!.track.width - props.style!.thumb.borderRadius);
     const minLimit = 0;
 
     const position = useRef(new Animated.ValueXY()).current;
@@ -105,10 +64,10 @@ const Slider = (props: SliderProps) => {
 
     return (
         <>
-            <View style={combinedStyle.track}>
+            <View style={props.style!.track}>
                 <Animated.View
                     style={[
-                        combinedStyle.thumb,
+                        props.style!.thumb,
                         {
                             left: position,
                             transform: [{translateX: setLimitPositionX()}],
@@ -117,7 +76,7 @@ const Slider = (props: SliderProps) => {
                     {...panRef.panHandlers}
                 />
             </View>
-            <Text style={styles.input}>{passLengthInput.toString()} </Text>
+            <Text style={props.style!.input}>{passLengthInput.toString()} </Text>
         </>
     );
 };

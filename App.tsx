@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import PasswordLength from './src/components/parameters/length';
 import Checkbox from './src/components/custom/checkbox';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import React, { StrictMode, useState } from 'react';
 import generatePassword from './src/service/randomPassword';
+import appStyles from './src/utils/styles';
 
 
 function App(): React.JSX.Element {
@@ -11,6 +12,8 @@ function App(): React.JSX.Element {
   const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
   const [isUpperCharacter, setIsUpperCharacter] = useState(false);
   const [isLowerCharacter, setIsLowerCharacter] = useState(false);
+
+  const styles = appStyles;
 
   console.log(`
     passLength = ${passLength}
@@ -25,26 +28,34 @@ function App(): React.JSX.Element {
           <View>
             <Text style={styles.title}>This is the password app generator</Text>
           </View>
-          <PasswordLength
-            onRelease={ setPassLength }
-            maxCharacters={55}
-            minCharacters={5}
-          />
-          <Checkbox
-              checked={isSpecialCharacter}
-              onPress={() => setIsSpecialCharacter(!isSpecialCharacter)}
-              label="Special characters"
-          />
-          <Checkbox
-              checked={isUpperCharacter}
-              onPress={() => setIsUpperCharacter(!isUpperCharacter)}
-              label="A-Z"
-          />
-          <Checkbox
-              checked={isLowerCharacter}
-              onPress={() => setIsLowerCharacter(!isLowerCharacter)}
-              label="a-z"
-          />
+          <View style={styles.checkboxContainer}>
+            <Checkbox
+                style={styles}
+                checked={isSpecialCharacter}
+                onPress={() => setIsSpecialCharacter(!isSpecialCharacter)}
+                label="Special characters"
+            />
+            <Checkbox
+                style={styles}
+                checked={isUpperCharacter}
+                onPress={() => setIsUpperCharacter(!isUpperCharacter)}
+                label="A-Z"
+            />
+            <Checkbox
+                style={styles}
+                checked={isLowerCharacter}
+                onPress={() => setIsLowerCharacter(!isLowerCharacter)}
+                label="a-z"
+            />
+          </View>
+          <View style={styles.sliderContainer}>
+            <PasswordLength
+              style={styles}
+              onRelease={ setPassLength }
+              maxCharacters={55}
+              minCharacters={5}
+            />
+          </View>
           <View>
             <Pressable
               onPress={ () => generatePassword(passLength, isUpperCharacter, isLowerCharacter, isSpecialCharacter) }
@@ -57,30 +68,5 @@ function App(): React.JSX.Element {
     </StrictMode>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-      fontSize: 24,         // Large size for emphasis
-      fontWeight: 'bold',   // Make it bold
-      textAlign:'center',  // Center align for titles
-      marginBottom: 10,     // Space below title
-      color: '#333',        // Dark color for readability
-  },
-  background: {
-    flex: 1,                // Take up full screen
-      backgroundColor: '#2596be', // Light gray background
-      justifyContent: 'center', // Center content
-      alignItems: 'center',     // Align items in center
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-  },
-});
 
 export default App;
