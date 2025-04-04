@@ -61,7 +61,7 @@ function App(): React.JSX.Element {
               onPress={ () => generatePassword(passLength, isUpperCharacter, isLowerCharacter, isSpecialCharacter) }
               style={ styles.button }
             >
-              <Text style={ styles.buttonText }>Click Me</Text>
+              <Text style={ styles.buttonText }>Generate Password</Text>
             </Pressable>
           </View>
         </SafeAreaView>
